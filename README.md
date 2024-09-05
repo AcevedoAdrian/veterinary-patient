@@ -1,50 +1,23 @@
-# React + TypeScript + Vite
+# Veterinary Patient Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The Veterinary Patient Application is a web-based application built using React. It is designed to manage patient records and appointments in a veterinary clinic.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User authentication: Allows users to create accounts and log in securely.
+- Patient management: Enables the creation, updating, and deletion of patient records, including information such as name, species, breed, and medical history.
+- Appointment scheduling: Provides a calendar interface for scheduling and managing appointments for each patient.
+- Notifications: Sends reminders and notifications to users for upcoming appointments or important updates.
+- Search functionality: Allows users to search for specific patients or appointments based on various criteria.
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To install and run the Veterinary Patient Application locally, follow these steps:
 
-- Configure the top-level `parserOptions` property like this:
+1. Clone the repository: `git clone https://github.com/your-username/veterinary-patient.git`
+2. Navigate to the project directory: `cd veterinary-patient`
+3. Install dependencies: `npm install`
+4. Start the application: `npm start`
+5. Open your browser and visit `http://localhost:3000` to access the application.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Please note that you may need to configure additional settings, such as database connection details, depending on your specific setup.
