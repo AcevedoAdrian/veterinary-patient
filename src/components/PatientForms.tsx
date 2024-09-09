@@ -1,19 +1,48 @@
 import {useForm} from 'react-hook-form';
 import Error from './Error';
-import { DraftPatient } from "../interface";
+import { DraftPatient, Patient } from "../interface";
 import { usePatientStore } from "../store";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function PatientForm() {
+  const listPatients = usePatientStore((state) => state.patients);
+  const activeIdPatient = usePatientStore((state) => state.activeIdPatient);
   const addPatient = usePatientStore((state) => state.addPatient);
+  const updatePatient = usePatientStore((state) => state.updatePatient);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     reset,
   } = useForm<DraftPatient>();
 
+  useEffect(() => {
+    if (activeIdPatient) {
+      const editPatient = listPatients.filter(
+        (patient) => patient.id === activeIdPatient,
+      )[0];
+
+      const keysPatient = Object.keys(editPatient).filter(
+        (key) => key !== "id",
+      ) as Array<keyof DraftPatient>;
+      console.log(keysPatient);
+
+      keysPatient.forEach((key) => {
+        setValue(key, editPatient[key]);
+      });
+    }
+  }, [activeIdPatient, listPatients, setValue]);
+
   const registerPatient = (data: DraftPatient) => {
-    addPatient(data);
+    if (activeIdPatient) {
+      updatePatient(data);
+      toast.success("Paciente actualizado correctamente");
+    } else {
+      addPatient(data);
+      toast.success("Paciente añadido correctamente");
+    }
     reset();
   };
 
@@ -121,8 +150,12 @@ export default function PatientForm() {
 
         <input
           type="submit"
-          className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-          value="Guardar Paciente"
+          className={` w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors ${
+            activeIdPatient
+              ? "bg-indigo-600 hover:bg-indigo-700"
+              : "bg-green-500 hover:bg-green-600"
+          } rounded-lg`}
+          value={`${activeIdPatient ? "Editar" : "Añadir"} Paciente`}
         />
       </form>
     </div>

@@ -7,8 +7,9 @@ type PatientStore = {
   patients: Patient[],
   activeIdPatient: Patient['id']
   addPatient: (data: DraftPatient)=> void,
-  deletePatient: (id: Patient['id']) => void
-  editePatient: (id: Patient['id']) => void
+  deletePatient: (id: Patient['id']) => void,
+  getPatuebtById: (id: Patient['id']) => void,
+  updatePatient: (data: DraftPatient) => void
 }
 const createIdPatient = (patients: DraftPatient): Patient => {
   return {
@@ -34,10 +35,25 @@ export const usePatientStore = create<PatientStore>()(devtools((set) => ({
       patients: state.patients.filter((patient)=> patient.id !== id)
     }))
   },
-  editePatient: (id) => {
+  getPatuebtById: (id) => {
     set(()=>({
       activeIdPatient: id
     }))
+  },
+  updatePatient: (data) => {
+    set(
+      (state)=>(
+        {
+          patients: state.patients.map(
+            (patient)=> 
+              patient.id === state.activeIdPatient 
+                ? {id: state.activeIdPatient, ...data} 
+                : patient
+          ),
+          activeIdPatient: ''
+        }
+      )
+    )
   }
 
 })))
